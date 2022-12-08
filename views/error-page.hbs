@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/book-icon.png">
+    <link rel="stylesheet" href='/stylesheets/404.css'>
+    <title>BOOK-STORE</title>
+</head>
+
+<body>
+    <hr>
+    <div class='error-404'>
+        <div class="title text-center">BOOK - STORE</div>
+        <div class="text-center"><b class="red">404.</b> That's an error!</div>
+        <div class="text-center">The request URL was not found on this server.</div>
+    </div>
+    <hr>
+    <div class="img-box">
+        <img src='/img/404.png' />
+    </div>
+    <hr>
+    <div>
+        <button class="back-to-home-page-btn" onclick="back()">BACK TO HOME PAGE</button>
+    </div>
+    <hr>
+    <script>
+        function back() {
+            window.location.replace('http://localhost:3000/')
+        }
+    </script>
+</body>
+
+</html>

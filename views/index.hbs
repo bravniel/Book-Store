@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/book-icon.png">
+    <link rel="stylesheet" href='/stylesheets/index.css'>
+    <title>BOOK-STORE</title>
+    <script src="https://kit.fontawesome.com/504621d975.js" crossorigin="anonymous"></script>
+    <script src='/javascript/index.js' type="module" defer></script>
+
+</head>
+
+<body id="body-page">
+    <header class="main-header">
+        <div id='logo-container' class="logo-container">
+            <img src='/img/book-logo.png' />
+            <div class="logo-subtitle">
+                <div class="subtitle-item">Book</div>
+                <div class="subtitle-item">Store</div>
+            </div>
+        </div>
+        <div id='nav-bar-container' class="nav-bar-container">
+            <div id='cart-btn' class="nav-item"><i class="fa-solid fa-cart-shopping"></i>Cart</div>
+            <div id='login-btn' class="nav-item">Login</div>
+            <div id="user-name-seperator" class="hidden">|</div>
+            <div id="user-name-btn" class="hidden"></div>
+            <div id="user-name-items" class="hidden">
+                <div id='user-edit-btn' class="user-item">Edit Profile</div>
+                <div id='user-logout-btn' class="user-item">Logout</div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="book-search-container" class="book-search-container">
+            <form id='book-search-form' class="book-search-form">
+                <input id='book-search-input' class="book-search-input" type='text' placeholder='Search for Book'
+                    autocomplete="off" value={{searchValue}}>
+                <button id='book-search-button' type='submit' class="book-search-button"><i
+                        class="fa-solid fa-magnifying-glass"></i>Search</button>
+            </form>
+            <div id='book-search-error-message' class="book-search-error-message"></div>
+        </div>
+
+        <div id='books-container' class="books-container">
+            {{#each books}}
+            <div class="book" id="{{this.name}}">
+                <div id="{{this.name}}" class="book-img cursor" style="background-image:url('{{this.image}}');"></div>
+                {{!-- <div class="book-img cursor"><img src="{{this.image}}"></div> --}}
+                <div class="book-name">{{this.name}}</div>
+            </div>
+            {{/each}}
+        </div>
+
+        <div id='pagination-container' class="pagination-container">
+            {{#if isLeftArrow}}
+            <button id='prev-page-btn' class='prev-page'>
+                <i class="fa-solid fa-caret-left"></i>
+            </button>{{/if}}
+            <div id='page' class=''>
+                <div id='page-number'>{{page}}</div>
+                <div>/</div>
+                <div id='pages-number'>{{allPages}}</div>
+            </div>
+            {{#if isRightArrow}}
+            <button id='next-page-btn' class='next-page'>
+                <i class="fa-solid fa-caret-right"></i>
+            </button>{{/if}}
+        </div>
+    </main>
+
+    <div id='login-register-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+                <div class="modal-title">Log In</div>
+                <button id="close-login-register-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='login-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder="Email">
+                    <input type='password' placeholder="Password">
+                    <div class="form-footer">
+                        <div id="clear-btn" class="clear-btn">Clear</div>
+                        <div id='login-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Login</button>
+                    <button class="register-btn" id='register-btn' type='button'>Register</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='register-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-address-card"></i></div>
+                <div class="modal-title">Register</div>
+                <button id="close-register-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='register-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder='Name'>
+                    <input type='text' placeholder='Email'>
+                    <input type='password' placeholder='Password'>
+                    <div class="form-footer">
+                        <div id="clear-btn" class="clear-btn">Clear</div>
+                        <div id='register-error-message'></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Register</button>
+                    <button class="register-btn" id='backToLogin-btn' type='button'>Back</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='edit-user-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-user-pen"></i></div>
+                <div class="modal-title">Edit User Profile</div>
+                <button id="close-edit-user-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='edit-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder='Name'>
+                    <input type='text' placeholder='Email'>
+                    <input type='password' placeholder='Password'>
+                    <input type='password' placeholder='Repeat Password'>
+                    <div class="form-footer">
+                        <div class="clear-btn" id='resetEdit-btn'>Reset</div>
+                        <div id='edit-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Update</button>
+                    <button class="register-btn" id='deleteUser-btn' type='button'>Delete</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='book-information-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-bookmark"></i></div>
+                <div class="modal-title">Book Information</div>
+                <button id="close-book-information-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <div id="info" class="info">
+                <div class="info-body">
+                    <div id="book-img" class="info-book-img"></div>
+                    <div class="info-form-body">
+                        <div id="book-name"><u>Name:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-author"><u>Author:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-year"><u>Year:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-genre"><u>Genre:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-description"><u>Description:</u>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="add-book-message" class="form-error"></div>
+                <footer id="modal-infoBook-footer" class="modal-infoBook-footer">
+                    <div id="quantity-container" class="quantity-container">
+                        <div class="quantityNumber-title">&#x2716;</div>
+                        <div id="quantityNumber" class="quantityNumber">1</div>
+                        <div id="btn-quantity-container" class="btn-quantity-container">
+                            <button id="increase-btn" class="increase-decrease-btn">+</button>
+                            <button id="decrease-btn" class="increase-decrease-btn">-</button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id='cart-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="modal-title">Cart</div>
+                <button id="close-cart-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <div id='cart-book-container' class="cart">
+                <div id='cart-book-body' class="cart-body">
+                    <div class="cart-book">
+                        <div id="cart-book-img" class="cart-book-img"></div>
+                        <div id="cart-book-name" class="cart-book-name">name</div>
+                    </div>
+                </div>
+                <button id='buy-books-btn' class="addBook-btn" type='button'>Buy</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/book-icon.png">
+    <link rel="stylesheet" href='/stylesheets/admin.css'>
+    <title>BOOK-STORE</title>
+    <script src="https://kit.fontawesome.com/504621d975.js" crossorigin="anonymous"></script>
+    <script src='/javascript/admin.js' type="module" defer></script>
+</head>
+
+<body id="body-page">
+    <header class="main-header">
+        <div id='logo-container' class="logo-container">
+            <img src='/img/book-logo.png' />
+            <div class="logo-subtitle">
+                <div class="subtitle-item">Book</div>
+                <div class="subtitle-item">Store</div>
+            </div>
+        </div>
+        <div id='nav-bar-container' class="nav-bar-container">
+            <div id='newBook-btn' class="nav-item"><i class="fa-solid fa-circle-plus"></i>&nbsp;New Book</div>
+            <div id="user-name-seperator" class="">|</div>
+            <div id="user-name-btn" class="nav-item"></div>
+            <div id="user-name-items" class="hidden">
+                <div id='user-edit-btn' class="user-item">Edit Profile</div>
+                <div id='user-logout-btn' class="user-item">Logout</div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div id="book-search-container" class="book-search-container">
+            <form id='book-search-form' class="book-search-form">
+                <input id='book-search-input' class="book-search-input" type='text' placeholder='Search for Book'
+                    autocomplete="off" value={{searchValue}}>
+                <button id='book-search-button' type='submit' class="book-search-button"><i
+                        class="fa-solid fa-magnifying-glass"></i>Search</button>
+            </form>
+            <div id='book-search-error-message' class="book-search-error-message"></div>
+        </div>
+
+        <div id='books-container' class="books-container">
+            {{#each books}}
+            <div class="book" id="{{this.name}}">
+                <div id="{{this.name}}" class="book-img cursor" style="background-image:url('{{this.image}}');"></div>
+                {{!-- <div class="book-img cursor"><img src="{{this.image}}"></div> --}}
+                <div class="book-name">{{this.name}}</div>
+            </div>
+            {{/each}}
+        </div>
+
+        <div id='pagination-container' class="pagination-container">
+            {{#if isLeftArrow}}
+            <button id='prev-page-btn' class='prev-page'>
+                <i class="fa-solid fa-caret-left"></i>
+            </button>{{/if}}
+            <div id='page' class=''>
+                <div id='page-number'>{{page}}</div>
+                <div>/</div>
+                <div id='pages-number'>{{allPages}}</div>
+            </div>
+            {{#if isRightArrow}}
+            <button id='next-page-btn' class='next-page'>
+                <i class="fa-solid fa-caret-right"></i>
+            </button>{{/if}}
+        </div>
+    </main>
+
+    <div id='edit-user-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-user-pen"></i></div>
+                <div class="modal-title">Edit User Profile</div>
+                <button id="close-edit-user-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='edit-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder='Username'>
+                    <input type='password' placeholder='Password'>
+                    <input type='password' placeholder='Repeat Password'>
+                    <div class="form-footer">
+                        <div class="clear-btn" id='resetEdit-btn'>Reset</div>
+                        <div id='edit-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Update</button>
+                    <button class="register-btn" id='deleteUser-btn' type='button'>Delete</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='book-information-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-bookmark"></i></div>
+                <div class="modal-title">Book Information</div>
+                <button id="close-book-information-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <div class="info">
+                <div class="info-body">
+                    <div id="book-img" class="info-book-img"></div>
+                    <div class="info-form-body">
+                        <div id="book-name"><u>Name:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-author"><u>Author:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-year"><u>Year:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-genre"><u>Genre:</u>
+                            <p></p>
+                        </div>
+                        <div id="book-description"><u>Description:</u>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <footer id="info" class="modal-footer">
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div id='new-book-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-file-circle-plus"></i></div>
+                <div class="modal-title">New Book</div>
+                <button id="close-newbook-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='new-book-form' class="form">
+                <div class="form-body">
+                    <div class="book-new">
+                        <u>Name:</u>
+                        <input id="new-book-name" type='text' placeholder='Name'>
+                    </div>
+                    <div class="book-new">
+                        <u>Author:</u>
+                        <input id="new-book-author" type='text' placeholder='Author'>
+                    </div>
+                    <div class="book-new">
+                        <u>Year:</u>
+                        <input id="new-book-year" type='text' placeholder='Year'>
+                    </div>
+                    <div class="book-new">
+                        <u>Genre:</u>
+                        <input id="new-book-genre" type='text' placeholder='Genre'>
+                    </div>
+                    <div class="book-new">
+                        <u>Description:</u>
+                        <input id="new-book-description" type='text' placeholder='Description'>
+                    </div>
+                    <div class="book-new">
+                        <u>Img URL:</u>
+                        <input id="new-book-img" type='text' placeholder='Img_URL'>
+                    </div>
+
+                    <div class="form-footer">
+                        <div class="clear-btn" id='clear-btn'>Reset</div>
+                        <div id='new-book-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Add</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='edit-book-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-file-pen"></i></div>
+                <div class="modal-title">Edit Book</div>
+                <button id="close-editbook-btn" class="modal-close-btn" type="button">X</button>
+            </div>
+            <form id='edit-book-form' class="form">
+                <div class="form-body">
+
+                    <div class="book-edit">
+                        <u>Name:</u>
+                        <input id="edit-book-name" type='text' placeholder="Name">
+                    </div>
+                    <div class="book-edit">
+                        <u>Author:</u>
+                        <input id="edit-book-author" type='text' placeholder="Author">
+                    </div>
+                    <div class="book-edit">
+                        <u>Year:</u>
+                        <input id="edit-book-year" type='text' placeholder="Year">
+                    </div>
+                    <div class="book-edit">
+                        <u>Genre:</u>
+                        <input id="edit-book-genre" type='text' placeholder="Genre">
+                    </div>
+                    <div class="book-edit">
+                        <u>Description:</u>
+                        <input id="edit-book-description" type='text' placeholder="Description">
+                    </div>
+                    <div class="book-edit">
+                        <u>Img URL:</u>
+                        <input id="edit-book-img" type='text' placeholder="Img_URL">
+                    </div>
+
+                    <div class="form-footer">
+                        {{!-- <div class="clear-btn" id='resetEdit-btn'>Reset</div> --}}
+                        <div id='edit-book-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Update</button>
+                    <button class="register-btn" id='resetEditBook-btn' type='button'>Reset</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

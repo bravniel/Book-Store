@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/book-icon.png">
+    <link rel="stylesheet" href='/stylesheets/admin-login.css'>
+    <title>BOOK-STORE</title>
+    <script src="https://kit.fontawesome.com/504621d975.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="body-page">
+    <div id='login-register-modal' class="modal">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+                <div class="modal-title">Log In</div>
+                <div class="modal-icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+            </div>
+            <form id='login-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder="Username">
+                    <input type='password' placeholder="Password">
+                    <div class="form-footer">
+                        <div id="clear-btn" class="clear-btn">Clear</div>
+                        <div id='login-error-message' class="form-error"></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Login</button>
+                    <button class="register-btn" id='register-btn' type='button'>Register</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+    <div id='register-modal' class="hidden">
+        <div class='modal-box'>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-address-card"></i></div>
+                <div class="modal-title">Register</div>
+                <div class="modal-icon"><i class="fa-solid fa-address-card"></i></div>
+            </div>
+            <form id='register-form' class="form">
+                <div class="form-body">
+                    <input type='text' placeholder='Username'>
+                    <input type='password' placeholder='Password'>
+                    <div class="form-footer">
+                        <div id="clear-btn" class="clear-btn">Clear</div>
+                        <div id='register-error-message'></div>
+                    </div>
+                </div>
+                <footer class="modal-footer">
+                    <button class="login-btn" type='submit'>Register</button>
+                    <button class="register-btn" id='backToLogin-btn' type='button'>Back</button>
+                </footer>
+            </form>
+        </div>
+    </div>
+
+    <script src='/javascript/admin-login.js'></script>
+</body>
+
+</html>
